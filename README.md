@@ -2,7 +2,7 @@
 
 This template provides a minimal setup to run the application.
 
-The app was built with Django and Django Rest Framework
+The app was built with Django and Django Rest Framework and PostgreSQL
 
 # Assumptions:
 
