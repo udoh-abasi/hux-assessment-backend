@@ -36,7 +36,7 @@ class CreateContact(APIView):
                 )
 
                 obj.save()
-                print("Saved Object", obj)
+                
 
                 return Response(
                     {

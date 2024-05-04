@@ -30,12 +30,9 @@ class UserRegister(APIView):
     )
 
     def post(self, request):
-        print("Got a request")
-        print(request.data)
         try:
             clean_data = custom_validation(request.data)
 
-            print("Clean data", clean_data)
         except:
             return Response(
                 {"message": "Email already exist or password is invalid"},
@@ -101,7 +98,6 @@ class UserLogout(APIView):
     authentication_classes = (SessionAuthentication,)
 
     def post(self, request):
-        print("Request came in")
         logout(request)
         return Response(status=status.HTTP_200_OK)
 
