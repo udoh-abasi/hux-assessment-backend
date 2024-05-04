@@ -11,11 +11,13 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ("email", "password")
 
+    # This will create the user
     def create(self, clean_data):
         user_obj = User.objects.create_user(
             email=clean_data["email"], password=clean_data["password"]
         )
 
+        # Then save the created user
         user_obj.save()
         return user_obj
 
@@ -25,6 +27,7 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
     def check_user(self, clean_data):
+        # Authenticate user against the database
         user = authenticate(
             username=clean_data["email"], password=clean_data["password"]
         )
@@ -34,6 +37,7 @@ class UserLoginSerializer(serializers.Serializer):
         return user
 
 
+# This ensures that the email and id is sent to the frontend
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

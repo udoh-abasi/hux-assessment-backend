@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 import uuid
 
 
+# So, we want to use a custom user model, and not the default that comes with django
 class AppUserManager(BaseUserManager):
+    # This function will run to create a user, and save in the database.
     def create_user(self, email, password=None, **other_fields):
         if email is None:
             raise ValueError("An email is required")
@@ -14,11 +16,14 @@ class AppUserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email)
+
+        # The hashed password will be saved
         user.set_password(password)
         user.save()
         return user
 
     def create_superuser(self, email, password=None):
+        # To create a superuser (that can log in to the admin panel), this function will run
         if email is None:
             raise ValueError("An email is required")
 
@@ -26,6 +31,8 @@ class AppUserManager(BaseUserManager):
             raise ValueError("A password is required")
 
         user = self.create_user(email, password)
+
+        # After creating a user, we just specify that we want them to be a superuser and have all the privileges (like logging in to the django admin panel)
         user.is_superuser = True
         user.is_staff = True
         user.save()

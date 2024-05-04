@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # NOTE: I also added this. To handle CORS, to avoid error when communicating with the frontend
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -83,9 +83,9 @@ WSGI_APPLICATION = "huxassessment.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "YOUR PASSWORD",
+        "NAME": "postgres",  # NOTE: Edit to match with your the Database name you want to use
+        "USER": "postgres",  # NOTE: Edit to match with your Database user's name
+        "PASSWORD": "YOUR PASSWORD",  # NOTE: Edit to match with your Database password
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -133,9 +133,12 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# NOTE: I added all the setting from here down to the end
+
 CORS_ALLOW_CREDENTIALS = True
 
-
+# Since I am using a custom user model, this needs to added
 AUTH_USER_MODEL = "user_api.AppUser"
 
 REST_FRAMEWORK = {
@@ -145,7 +148,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-CSRF_TRUSTED_ORIGINS = [  # This was added bcoz without it, sending requests to the 'logout' view will cause an error
+CSRF_TRUSTED_ORIGINS = [  # This was added because without it, sending requests to the 'csrf' protected view will cause errors
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:8000",
@@ -157,13 +160,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:8000",
 ]
-
-# This was added to fix the error 'Cookie “csrftoken” has been rejected because it is in a cross-site context and its “SameSite” is “Lax” or “Strict”.'
-# CSRF_COOKIE_SECURE = True
-# CSRF_COOKIE_SAMESITE = "None"
-
-# CSRF_COOKIE_DOMAIN = "localhost"
-# SESSION_COOKIE_DOMAIN = "localhost"
 
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
